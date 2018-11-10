@@ -1,5 +1,7 @@
 package io.vertx.starter;
 
+import java.util.Date;
+
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 
@@ -8,9 +10,11 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void start(Future<Void> startFuture) throws Exception {
     vertx.createHttpServer().requestHandler(req -> {
+      final String msg = new Date() + " Hello from Vert.x! v1.0.2";
       req.response()
         .putHeader("content-type", "text/plain")
-        .end("Hello from Vert.x!");
+        .end(msg);
+        System.out.println(msg);
     }).listen(8080, http -> {
       if (http.succeeded()) {
         startFuture.complete();
